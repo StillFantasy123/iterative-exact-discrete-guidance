@@ -1,0 +1,1 @@
+evaluation: {schema: maxcut-evaluation-v1, method: one_shot, scale: ba100}

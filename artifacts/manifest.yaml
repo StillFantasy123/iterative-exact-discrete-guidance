@@ -1,0 +1,489 @@
+schema_version: paper_release_v4
+method: IEDG
+scope: formal main-paper checkpoints and registered evaluation inputs
+artifact_root: artifacts
+
+distribution:
+  layout: flat
+  bundled: true
+
+checkpoint_format:
+  payload: raw_pytorch_state_dict
+  weights: ema
+  inference_only: true
+  resumable_training_checkpoint: false
+
+evaluation_protocol:
+  mode: paper
+  selection: explicit_checkpoint
+  reference_split: test
+  reference_seed: 0
+  rollout_seed: 2701
+  rollout_samples: 4096
+  guidance_strength: 1.0
+  sampling_steps: 256
+  evaluation_replicates: 1
+  histogram_binning: fixed_registered_edges
+
+results:
+  ising16_beta028:
+    method: iedg
+    evaluator: lattice
+    config: configs/ising16/iedg_beta028.yaml
+    initialization: analytic_uniform
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.28
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 34000
+    checkpoint: iedg_ising16_beta028_step034000_ema.pt
+    training_gpu: NVIDIA RTX A6000
+    evaluation:
+      generated_samples: eval_ising16_beta028_generated.pt
+      reference_samples: eval_ising16_beta028_reference.pt
+      metrics: eval_ising16_beta028_metrics.json
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  ising16_beta04407:
+    method: iedg
+    evaluator: lattice
+    config: configs/ising16/iedg_beta04407.yaml
+    initialization: {result: ising16_beta028}
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.4407
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 62000
+    checkpoint: iedg_ising16_beta04407_step062000_ema.pt
+    training_gpu: NVIDIA RTX A6000
+    evaluation:
+      generated_samples: eval_ising16_beta04407_generated.pt
+      reference_samples: eval_ising16_beta04407_reference.pt
+      metrics: eval_ising16_beta04407_metrics.json
+      reference_num_samples: 65536
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        implementation: numba_compiled_union_find_v1
+        batch_size: 128
+        num_collect: 512
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  ising16_beta06:
+    method: iedg
+    evaluator: lattice
+    config: configs/ising16/iedg_beta06.yaml
+    initialization: {result: ising16_beta04407}
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.6
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 58000
+    checkpoint: iedg_ising16_beta06_step058000_ema.pt
+    training_gpu: NVIDIA RTX PRO 6000
+    evaluation:
+      generated_samples: eval_ising16_beta06_generated.pt
+      reference_samples: eval_ising16_beta06_reference.pt
+      metrics: eval_ising16_beta06_metrics.json
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  potts16_beta05:
+    method: iedg
+    evaluator: lattice
+    config: configs/potts16/iedg_beta05.yaml
+    initialization: analytic_uniform
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 0.5
+      J: 1.0
+    checkpoint_step: 26000
+    checkpoint: iedg_potts16_beta05_step026000_ema.pt
+    training_gpu: NVIDIA RTX A6000
+    evaluation:
+      generated_samples: eval_potts16_beta05_generated.pt
+      reference_samples: eval_potts16_beta05_reference.pt
+      metrics: eval_potts16_beta05_metrics.json
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  potts16_beta1005:
+    method: iedg
+    evaluator: lattice
+    config: configs/potts16/iedg_beta1005.yaml
+    initialization: {result: potts16_beta05}
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 1.005
+      J: 1.0
+    checkpoint_step: 88000
+    checkpoint: iedg_potts16_beta1005_step088000_ema.pt
+    training_gpu: NVIDIA RTX PRO 6000
+    evaluation:
+      generated_samples: eval_potts16_beta1005_generated.pt
+      reference_samples: eval_potts16_beta1005_reference.pt
+      metrics: eval_potts16_beta1005_metrics.json
+      reference_num_samples: 65536
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 512
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  potts16_beta12:
+    method: iedg
+    evaluator: lattice
+    config: configs/potts16/iedg_beta12.yaml
+    initialization: {result: potts16_beta1005}
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 1.2
+      J: 1.0
+    checkpoint_step: 46000
+    checkpoint: iedg_potts16_beta12_step046000_ema.pt
+    training_gpu: NVIDIA RTX PRO 6000
+    evaluation:
+      generated_samples: eval_potts16_beta12_generated.pt
+      reference_samples: eval_potts16_beta12_reference.pt
+      metrics: eval_potts16_beta12_metrics.json
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  one_shot_ising16_beta028:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/ising16/one_shot_beta028.yaml
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.28
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 2000
+    checkpoint: one_shot_ising16_beta028_step002000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_ising16_beta028_reference.pt
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  one_shot_ising16_beta04407:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/ising16/one_shot_beta04407.yaml
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.4407
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 40000
+    checkpoint: one_shot_ising16_beta04407_step040000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_ising16_beta04407_reference.pt
+      reference_num_samples: 65536
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        implementation: numba_compiled_union_find_v1
+        batch_size: 128
+        num_collect: 512
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  one_shot_ising16_beta06:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/ising16/one_shot_beta06.yaml
+    problem:
+      kind: ising
+      lattice_size: 16
+      beta: 0.6
+      J: 1.0
+      h: 0.0
+    checkpoint_step: 58000
+    checkpoint: one_shot_ising16_beta06_step058000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_ising16_beta06_reference.pt
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 8192
+        collect_every: 128
+        seed: 0
+
+  one_shot_potts16_beta05:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/potts16/one_shot_beta05.yaml
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 0.5
+      J: 1.0
+    checkpoint_step: 4000
+    checkpoint: one_shot_potts16_beta05_step004000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_potts16_beta05_reference.pt
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  one_shot_potts16_beta1005:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/potts16/one_shot_beta1005.yaml
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 1.005
+      J: 1.0
+    checkpoint_step: 26000
+    checkpoint: one_shot_potts16_beta1005_step026000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_potts16_beta1005_reference.pt
+      reference_num_samples: 65536
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 512
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  one_shot_potts16_beta12:
+    method: one_shot_dgm
+    evaluator: lattice
+    config: configs/potts16/one_shot_beta12.yaml
+    problem:
+      kind: potts
+      lattice_size: 16
+      num_states: 3
+      beta: 1.2
+      J: 1.0
+    checkpoint_step: 62000
+    checkpoint: one_shot_potts16_beta12_step062000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      reference_samples: eval_potts16_beta12_reference.pt
+      reference_num_samples: 4096
+      reference_sample_cfg:
+        sampler: swendsen_wang
+        batch_size: 128
+        num_collect: 32
+        burn_in: 65536
+        collect_every: 128
+        seed: 0
+
+  one_shot_ising4_beta06:
+    method: one_shot_dgm
+    evaluator: ising4_exact
+    config: configs/ising4/one_shot_beta06.yaml
+    problem:
+      kind: ising
+      lattice_size: 4
+      beta: 0.6
+      J: 1.0
+      h: 0.1
+    checkpoint_step: 80000
+    checkpoint: one_shot_ising4_beta06_step080000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      rollout_seed: 2701
+      rollout_samples: 1048576
+      guidance_strength: 1.0
+      sampling_steps: 256
+
+  iedg_ising4_beta06:
+    method: iedg
+    evaluator: ising4_exact
+    config: configs/ising4/iedg_beta06.yaml
+    problem:
+      kind: ising
+      lattice_size: 4
+      beta: 0.6
+      J: 1.0
+      h: 0.1
+    checkpoint_step: 70000
+    checkpoint: iedg_ising4_beta06_step070000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      rollout_seed: 2701
+      rollout_samples: 1048576
+      guidance_strength: 1.0
+      sampling_steps: 256
+
+  one_shot_maxcut_ba20:
+    method: one_shot_dgm
+    evaluator: maxcut
+    config: configs/maxcut/one_shot_ba20.yaml
+    problem: {kind: maxcut, scale: ba20}
+    checkpoint_step: 52000
+    checkpoint: one_shot_maxcut_ba20_step052000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba20/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0
+
+  iedg_maxcut_ba20:
+    method: iedg
+    evaluator: maxcut
+    config: configs/maxcut/iedg_ba20.yaml
+    problem: {kind: maxcut, scale: ba20}
+    checkpoint_step: 112000
+    checkpoint: iedg_maxcut_ba20_step112000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba20/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0
+
+  one_shot_maxcut_ba40:
+    method: one_shot_dgm
+    evaluator: maxcut
+    config: configs/maxcut/one_shot_ba40.yaml
+    problem: {kind: maxcut, scale: ba40}
+    checkpoint_step: 56000
+    checkpoint: one_shot_maxcut_ba40_step056000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba40/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0
+
+  iedg_maxcut_ba40:
+    method: iedg
+    evaluator: maxcut
+    config: configs/maxcut/iedg_ba40.yaml
+    problem: {kind: maxcut, scale: ba40}
+    checkpoint_step: 116000
+    checkpoint: iedg_maxcut_ba40_step116000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba40/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0
+
+  one_shot_maxcut_ba100:
+    method: one_shot_dgm
+    evaluator: maxcut
+    config: configs/maxcut/one_shot_ba100.yaml
+    problem: {kind: maxcut, scale: ba100}
+    checkpoint_step: 56000
+    checkpoint: one_shot_maxcut_ba100_step056000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba100/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0
+
+  iedg_maxcut_ba100:
+    method: iedg
+    evaluator: maxcut
+    config: configs/maxcut/iedg_ba100.yaml
+    problem: {kind: maxcut, scale: ba100}
+    checkpoint_step: 125000
+    checkpoint: iedg_maxcut_ba100_step125000_ema.pt
+    format: raw_pytorch_state_dict
+    weights: ema
+    evaluation:
+      graph_manifest: CO_experiment/data/manifests/maxcut_ba100/test_graphs.json.gz
+      graph_split: test
+      graph_count: 32
+      rollout_seed: 42
+      samples_per_graph: 512
+      sampling_steps: 128
+      guidance_strength: 1.0

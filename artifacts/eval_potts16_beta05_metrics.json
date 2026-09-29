@@ -1,0 +1,34 @@
+{
+  "checkpoint_step": 26000,
+  "evaluation": {
+    "evaluation_replicates": 1,
+    "guidance_strength": 1.0,
+    "histogram_binning": "fixed_registered_edges",
+    "mode": "paper",
+    "reference_num_samples": 4096,
+    "reference_seed": 0,
+    "reference_split": "test",
+    "rollout_num_samples": 4096,
+    "rollout_seed": 2701,
+    "sampling_steps": 256,
+    "selection": "explicit_checkpoint",
+    "weights": "ema"
+  },
+  "metrics": {
+    "EW2": 0.5736737422089319,
+    "dAbsM_abs": 0.02838134765625,
+    "dominant_mode_sorted_l1_to_ref": 0.009765625,
+    "energy_per_site_js": 0.0017202042052446172,
+    "metadns_cv_js": 0.008682318443185991,
+    "two_point_corr_curve_mae": 0.0006272792816162109,
+    "two_point_corr_mae": 0.067291259765625
+  },
+  "problem": {
+    "J": 1.0,
+    "beta": 0.5,
+    "kind": "potts",
+    "lattice_size": 16,
+    "num_states": 3
+  },
+  "schema_version": "paper_lattice_evaluation_v2"
+}

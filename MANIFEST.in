@@ -1,0 +1,6 @@
+include README.md
+include environment.yml
+recursive-include artifacts *.yaml *.pt *.json
+recursive-include configs *.yaml *.md
+recursive-include CO_experiment/data/manifests *.json.gz *.md
+

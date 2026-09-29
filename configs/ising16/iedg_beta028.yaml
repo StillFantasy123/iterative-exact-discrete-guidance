@@ -1,0 +1,6 @@
+evaluation:
+  schema: lattice-evaluation-v1
+  preset: ising16
+  method: iedg
+  target_beta: 0.28
+  preconditioner: {enabled: true, ratio_scale: 1.0, base_beta: 0.28}

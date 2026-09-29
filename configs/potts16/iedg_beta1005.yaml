@@ -1,0 +1,6 @@
+evaluation:
+  schema: lattice-evaluation-v1
+  preset: potts16
+  method: iedg
+  target_beta: 1.005
+  preconditioner: {enabled: true, ratio_scale: 0.5, base_beta: 1.005}

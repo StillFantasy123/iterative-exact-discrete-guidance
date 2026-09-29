@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iterative-exact-discrete-guidance"
+version = "1.0.0"
+description = "Evaluation release for Iterative Exact Discrete Guidance"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.5",
+  "numpy>=1.26",
+  "pyyaml>=6.0",
+  "tqdm>=4.66",
+]
+
+[project.scripts]
+iedg-artifacts = "edg_experiment.artifacts:main"
+iedg-validate-release = "edg_experiment.release_validation:main"
+iedg-lattice-evaluate = "edg_experiment.lattice.evaluation.finalize:main"
+iedg-ising4-evaluate = "ising4_experiment.evaluate_exact:main"
+iedg-maxcut-evaluate = "CO_experiment.cli.evaluate:main"
+iedg-maxcut-uniform = "CO_experiment.cli.evaluate_uniform:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+  "edg_experiment*",
+  "ising4_experiment*",
+  "ising16_experiment*",
+  "potts16_experiment*",
+  "CO_experiment*",
+]
+
+[tool.setuptools.package-data]
+CO_experiment = ["data/manifests/README.md", "data/manifests/*/*.json.gz"]
+
+[tool.setuptools.data-files]
+"share/iedg/configs" = ["configs/README.md"]
+"share/iedg/configs/ising4" = ["configs/ising4/*.yaml"]
+"share/iedg/configs/ising16" = ["configs/ising16/*.yaml"]
+"share/iedg/configs/potts16" = ["configs/potts16/*.yaml"]
+"share/iedg/configs/maxcut" = ["configs/maxcut/*.yaml"]
+"share/iedg/artifacts" = ["artifacts/*.yaml", "artifacts/*.json", "artifacts/*.pt"]

@@ -1,0 +1,15 @@
+name: iedg-paper
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12.13
+  - numpy=2.4.3
+  - pyyaml=6.0.3
+  - tqdm=4.67.3
+  - setuptools>=68
+  - wheel
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu128
+      - torch==2.11.0+cu128

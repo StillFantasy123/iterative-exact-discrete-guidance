@@ -1,0 +1,6 @@
+evaluation:
+  schema: lattice-evaluation-v1
+  preset: ising4
+  method: one_shot
+  target_beta: 0.6
+  preconditioner: {enabled: false}
